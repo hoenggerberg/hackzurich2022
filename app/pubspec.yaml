@@ -40,6 +40,7 @@ dependencies:
   firebase_core: ^1.22.0
   new_gradient_app_bar: ^0.2.0
   visibility_detector: ^0.3.3
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

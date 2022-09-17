@@ -4,6 +4,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:app/models/ElevatorState.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,9 +38,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentItem = 0;
+  String last_activity = "default";
+  int floor = 0;
   bool active = false;
-  int floor = 3;
   List<bool> acitivity_active = List.generate(ActivitiesData.activities.length, (index) => false);
 
   @override
@@ -99,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       setState(() {
                         acitivity_active[index] = !acitivity_active[index];
+                        last_activity = ActivitiesData.activities[index].name;
                       });
                     },
                     child: Row(
@@ -142,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Center(child: Icon(Icons.unfold_more, size: 60,),),
                       ),
                       onTap: () {
-                        //TODO send elevator call to API
+                        ElevatorState(id: "HARDCODE", floor: floor, activity: last_activity, timestamp: 0.0).update();
                       },
                     ),
                     SizedBox(width: 80,),
@@ -157,11 +159,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               onVisibilityChanged: (VisibilityInfo info) {
                                 if (info.visibleFraction == 1)
                                   setState(() {
-                                    _currentItem = index;
-                                    print(_currentItem);
+                                    floor = index;
+                                    print(floor);
                                   });
                               },
-                              child: Text(index.toString(), style: TextStyle(fontSize: 25, color: index==_currentItem? Theme.of(context).highlightColor : null),)
+                              child: Text(index.toString(), style: TextStyle(fontSize: 25, color: index==floor? Theme.of(context).highlightColor : null),)
                           );
                         },
                       ),
