@@ -2,6 +2,8 @@ import 'package:app/data/activities_data.dart';
 import 'package:app/models/activity.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Elevate My Day',
       theme: ThemeData(
         primarySwatch: Colors.purple,
+        highlightColor: Colors.red
       ),
       home: const MyHomePage(title: 'Elevate My Day'),
     );
@@ -33,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentItem = 0;
   bool active = false;
   int floor = 3;
   List<bool> acitivity_active = List.generate(ActivitiesData.activities.length, (index) => false);
@@ -41,8 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar:  NewGradientAppBar(
+          title: Text("Elevate my day"),
+          gradient: LinearGradient(colors: [Colors.purple, Colors.red])
       ),
       body: Center(
         child: Column(
@@ -56,12 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AvatarGlow(
-                  glowColor: Theme.of(context).primaryColor,
+                  glowColor: active ? Colors.green : Theme.of(context).primaryColor,
                   endRadius: 70.0,
                   duration: Duration(milliseconds: 2000),
                   repeat: true,
                   showTwoGlows: true,
-
                   child: IconButton(
                     icon: Icon(Icons.power_settings_new),
                     isSelected: active,
@@ -118,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: double.infinity,
               height: 150,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent, width: 4),
+                  border: Border.all(color: Theme.of(context).primaryColor, width: 4),
                   borderRadius: BorderRadius.circular(15),
               ),
               child: Center(
@@ -131,21 +136,40 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent, width: 4),
+                          border: Border.all(color: Theme.of(context).primaryColor, width: 4),
                           borderRadius: BorderRadius.circular(9),
                         ),
                         child: Center(child: Icon(Icons.unfold_more, size: 60,),),
                       ),
+                      onTap: () {
+                        //TODO send elevator call to API
+                      },
                     ),
                     SizedBox(width: 80,),
                     Container(
-                      width: 30,
+                      width: 40,
                       height: 100,
-                      child: ListView(
-                        children: List.generate(37, (index) {
-                          return Text(index.toString(), style: TextStyle(fontSize: 20, color: index==floor? Theme.of(context).primaryColor : null),);
-                        }),
+                      child: ListView.builder(
+                        itemCount: 35,
+                        itemBuilder: (context, index) {
+                          return VisibilityDetector(
+                              key: Key(index.toString()),
+                              onVisibilityChanged: (VisibilityInfo info) {
+                                if (info.visibleFraction == 1)
+                                  setState(() {
+                                    _currentItem = index;
+                                    print(_currentItem);
+                                  });
+                              },
+                              child: Text(index.toString(), style: TextStyle(fontSize: 25, color: index==_currentItem? Theme.of(context).highlightColor : null),)
+                          );
+                        },
                       ),
+                      // child: ListView(
+                      //   children: List.generate(37, (index) {
+                      //     return Text(index.toString(), style: TextStyle(fontSize: 20, color: index==floor? Theme.of(context).highlightColor : null),);
+                      //   }),
+                      // ),
                     )
                   ],
                 ),

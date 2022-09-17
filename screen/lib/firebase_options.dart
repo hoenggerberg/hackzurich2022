@@ -17,33 +17,30 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-            'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -52,11 +49,23 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBpE4ouQcO6OS_xMEHpNwCidIlygmiXSg0',
-    appId: '1:770821899061:android:56a9771f0cb53e35cb827c',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAL9ky9FxR6mggIbXwvn5h1-0U5Hio2fR0',
+    appId: '1:770821899061:web:270cdbbb3fe16cc6cb827c',
+    messagingSenderId: '770821899061',
+    projectId: 'hackzurich22-6eaec',
+    authDomain: 'hackzurich22-6eaec.firebaseapp.com',
+    storageBucket: 'hackzurich22-6eaec.appspot.com',
+    measurementId: 'G-BZXRE18LQ5',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAcvCMi-ZLFMJ4SWvBnSB4uaYW_VLfX_rU',
+    appId: '1:770821899061:ios:2117caff40079531cb827c',
     messagingSenderId: '770821899061',
     projectId: 'hackzurich22-6eaec',
     storageBucket: 'hackzurich22-6eaec.appspot.com',
+    iosClientId: '770821899061-gfi3lsnd7ijp5rne5t2g7mb0es5k2ng7.apps.googleusercontent.com',
+    iosBundleId: 'com.example.screen',
   );
 }
