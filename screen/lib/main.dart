@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen/models/ElevatorState.dart';
+import 'package:screen/models/trivia.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage>
   String text = "Welcome";
   Widget textW = Text("");
   bool textVisible = true;
+
+  int triviaIdx = 0;
 
   String mode = "default";
 
@@ -177,6 +180,36 @@ class _MyHomePageState extends State<MyHomePage>
 
           } break;
 
+          case "Trivia": {
+
+            setState(() {
+              color1 = Colors.yellow;
+              color2 = Colors.yellowAccent;
+
+              radAdd = 50;
+              radMult = 1;
+              _animationController.duration=Duration(milliseconds: 6000);
+            });
+
+
+            if (status == AnimationStatus.completed ||
+                status == AnimationStatus.dismissed) {
+              //_animationController.reverse();
+              changeText("");
+              Future.delayed(const Duration(milliseconds: 1000), () {
+                if (reverse) {
+                  _animationController.reverse();
+                  changeText(Trivia.qa[triviaIdx++ % Trivia.qa.length]);
+                } else {
+                  _animationController.forward();
+                  changeText(Trivia.qa[triviaIdx++ % Trivia.qa.length]);
+                }
+                reverse = !reverse;
+              });
+            }
+
+          } break;
+
           default: {
 
             setState(() {
@@ -297,6 +330,16 @@ class _MyHomePageState extends State<MyHomePage>
                     mode = "Squat";
                   });
                   ElevatorState(id: "HARDCODE", floor: 0, activity: "Squat", timestamp: 0.0).update();
+                  ;
+                },
+              ),
+              InkWell(
+                child: Text("trivia "),
+                onTap: () {
+                  setState(() {
+                    mode = "Trivia";
+                  });
+                  ElevatorState(id: "HARDCODE", floor: 0, activity: "Trivia", timestamp: 0.0).update();
                   ;
                 },
               ),

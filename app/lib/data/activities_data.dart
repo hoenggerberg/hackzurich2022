@@ -9,7 +9,7 @@ class ActivitiesData {
     Activity("Dance", Icons.emoji_people, Colors.pinkAccent),
     Activity("Squat", Icons.fitness_center, Colors.red),
     Activity("News", Icons.newspaper, Colors.indigoAccent),
-    Activity("Fun Facts", Icons.lightbulb, Colors.yellow),
+    Activity("Trivia", Icons.lightbulb, Colors.yellow),
     Activity("Motivational Speech", Icons.record_voice_over, Colors.teal),
     Activity("Joke", Icons.sentiment_very_satisfied_outlined, Colors.orange),
   ];
