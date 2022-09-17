@@ -3,6 +3,7 @@ import json
 import numpy as np
 
 from pathlib import Path
+from sklearn.utils import shuffle
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.model_selection import cross_validate
 
@@ -23,6 +24,7 @@ class PosePredictor:
             for f in files
             if "_" in f and f.startswith("dataset") and f.endswith(".json")
         ]
+        print(tmp)
 
         def load_dataset(path):
             with open(path, "r") as f:
@@ -42,8 +44,12 @@ class PosePredictor:
                 y_cat = np.zeros(len(tmp))
                 y_cat[i] = 1
                 y.append(y_cat)
+        X,y = shuffle(X,y)
+        reg = RandomForestClassifier(n_estimators=300)
+        cv_results = cross_validate(reg, X, y, cv=5)
+        print('cv_results', cv_results)
 
-        reg = RandomForestClassifier(n_estimators=500)
+        reg = RandomForestClassifier(n_estimators=300)
         reg.fit(X, y)
 
         self.reg = reg
