@@ -1,4 +1,6 @@
 # Miscellaneous
+*dataset.json
+# __pycache__
 *.class
 *.log
 *.pyc
