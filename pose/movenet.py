@@ -8,12 +8,13 @@ from text import writeText
 from util import get_capture, get_model
 from sampler import Sampler
 from classifier import PosePredictor
+from floor_select import FloorSelect
 
 cap = get_capture()
 movenet = get_model()
-classifier = PosePredictor()
-sampler = Sampler()
-
+classifier = None
+sampler = None
+floor_select = None
 success, img = cap.read()
 
 y, x, _ = img.shape
@@ -42,21 +43,35 @@ while success:
 
     canvas.draw_keypoints(keypoints, img)
     canvas.draw_pose(keypoints, img)
-    writeText(img,sampler.record(keypoints))
-    writeText(img,classifier.single_pred(keypoints),low=False)
-
+    if sampler is not None:
+        writeText(img,sampler.record(keypoints))
+    if classifier is not None:
+        pred_pos = classifier.single_pred(keypoints)
+        writeText(img,pred_pos,low=False)
+    if floor_select is not None:
+        floor_select.use_position(pred_pos)
+        floor = floor_select.floor
+        writeText(img,f'{floor}')
     # scale 
     img = cv2.resize(img, dsize=(x*2, y*2), interpolation=cv2.INTER_CUBIC)
 
     # Shows image
     cv2.imshow('Movenet', img)
     # Waits for the next frame, checks if q was pressed to quit
-    if cv2.waitKey(1) == ord("q"):
+    if (key:=cv2.waitKey(1)) == ord("q"):
         break
-
+    elif key == ord("s"):
+        sampler = Sampler()
+    elif key == ord("p"):
+        classifier = PosePredictor()
+    elif key == ord("f"):
+        floor_select = FloorSelect()
+        
     # Reads next frame
     success, img = cap.read()
     
 
 cap.release()
-sampler.save()
+
+if sampler is not None:
+    sampler.save()

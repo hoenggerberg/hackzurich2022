@@ -1,0 +1,6 @@
+tensorflow
+tensorflow_hub
+opencv-python
+numpy
+sklearn
+httpx
