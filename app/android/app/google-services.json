@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "770821899061",
+    "project_id": "hackzurich22-6eaec",
+    "storage_bucket": "hackzurich22-6eaec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770821899061:android:56a9771f0cb53e35cb827c",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770821899061-bslrnhrl7hs6juh12qvgjkq6smbvsfdq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpE4ouQcO6OS_xMEHpNwCidIlygmiXSg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770821899061-bslrnhrl7hs6juh12qvgjkq6smbvsfdq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "770821899061-54jpc68hbpna4dd1oirou9u2licofjmu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
