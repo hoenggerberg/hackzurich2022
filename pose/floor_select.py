@@ -13,7 +13,7 @@ class FloorSelect:
         self.lockin = time.time()+1000
            
     def use_position(self, pred):
-        if pred=='arm_up' or pred=='double_up':
+        if pred=='arm-up' or pred=='double-up':
             self.floor_ += self.spacing
             self.lockin = time.time()
         elif pred=='squat':
@@ -27,6 +27,10 @@ class FloorSelect:
                 print("api")
                 from2(self.origin_floor, self.floor)
                 self.origin_floor = self.floor
+
+        # In case we don't want to use the rest-api
+        #with open("/tmp/floor_state") as f:
+        #    f.write(str(int(self.floor)))
 
     @property 
     def floor(self):
