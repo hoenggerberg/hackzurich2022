@@ -46,7 +46,10 @@ class _MyHomePageState extends State<MyHomePage>
   Color color1 = Colors.purple;
   Color color2 = Colors.purpleAccent;
 
-  String curId = "INIT";
+  double radAdd = 100;
+  double radMult = 0.5;
+
+  String curId = "OFFLINE ";
 
   Timer? timer;
 
@@ -75,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage>
 
     setState(() {
       latestState = e;
+      mode = latestState.activity;
       curId = e.timestamp.toString();
     });
   }
@@ -99,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage>
   void showStuff() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4),
+      duration: Duration(milliseconds: 2000),
     );
     //_animationController.repeat(reverse: true);
     bool reverse = true;
@@ -116,6 +120,10 @@ class _MyHomePageState extends State<MyHomePage>
             setState(() {
               color1 = Colors.white;
               color2 = Colors.blueAccent;
+
+              radAdd = 40;
+              radMult = 2;
+              _animationController.duration=Duration(milliseconds: 4000);
             });
 
 
@@ -138,18 +146,53 @@ class _MyHomePageState extends State<MyHomePage>
             }
 
           } break;
+
+          case "Squat": {
+
+            setState(() {
+              color1 = Colors.red;
+              color2 = Colors.redAccent;
+
+              radAdd = 90;
+              radMult = 1;
+              _animationController.duration=Duration(milliseconds: 1000);
+            });
+
+            if (status == AnimationStatus.completed ||
+                status == AnimationStatus.dismissed) {
+              //_animationController.reverse();
+              changeText("Squat");
+              Future.delayed(const Duration(milliseconds: 1), () {
+                if (reverse) {
+                  _animationController.reverse();
+                  changeText("");
+                } else {
+                  _animationController.forward();
+                  changeText("Squat");
+                }
+                reverse = !reverse;
+              });
+            }
+
+
+          } break;
+
           default: {
 
             setState(() {
               color1 = Colors.purple;
               color2 = Colors.purpleAccent;
+
+              radAdd = 90;
+              radMult = 0.2;
+              _animationController.duration=Duration(milliseconds: 1000);
             });
 
             if (status == AnimationStatus.completed ||
                 status == AnimationStatus.dismissed) {
               //_animationController.reverse();
               changeText("Welcome");
-              Future.delayed(const Duration(milliseconds: 1000), () {
+              Future.delayed(const Duration(milliseconds: 1), () {
                 if (reverse) {
                   _animationController.reverse();
                 } else {
@@ -202,8 +245,8 @@ class _MyHomePageState extends State<MyHomePage>
                   height: 150,
                 ),
                 Container(
-                  width: _animation.value * 2 + 30,
-                  height: _animation.value * 2 + 30,
+                  width: _animation.value * radMult + radAdd,
+                  height: _animation.value * radMult + radAdd,
                   //child: Icon(Icons.mic,color: Colors.white,),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -212,8 +255,8 @@ class _MyHomePageState extends State<MyHomePage>
                         BoxShadow(
                             color: color2,
                             //Color.fromARGB(130, 237, 125, 80),
-                            blurRadius: _animation.value,
-                            spreadRadius: _animation.value)
+                            blurRadius: _animation.value * radMult,
+                            spreadRadius: _animation.value * radMult)
                       ]),
                 ),
               ],
@@ -228,20 +271,32 @@ class _MyHomePageState extends State<MyHomePage>
                 },
               ),
               InkWell(
-                child: Text("default"),
+                child: Text("default "),
                 onTap: () {
                   setState(() {
-                    mode = "default";
+                    mode = "default ";
                   });
+                  ElevatorState(id: "HARDCODE", floor: 0, activity: "default", timestamp: 0.0).update();
                   ;
                 },
               ),
               InkWell(
-                child: Text("breathe"),
+                child: Text("breathe "),
                 onTap: () {
                   setState(() {
                     mode = "Breathing Exercise";
                   });
+                  ElevatorState(id: "HARDCODE", floor: 0, activity: "Breathing Exercise", timestamp: 0.0).update();
+                  ;
+                },
+              ),
+              InkWell(
+                child: Text("squat "),
+                onTap: () {
+                  setState(() {
+                    mode = "Squat";
+                  });
+                  ElevatorState(id: "HARDCODE", floor: 0, activity: "Squat", timestamp: 0.0).update();
                   ;
                 },
               ),

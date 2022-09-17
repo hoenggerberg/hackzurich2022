@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         active = !active;
                       });
+                      ElevatorState(id: "HARDCODE", floor: 0, activity: "default", timestamp: 0.0).update();
                     },
                   ),
                 ),
@@ -99,8 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onPressed: () {
                       setState(() {
+                        if (!acitivity_active[index]) {
+                          last_activity = ActivitiesData.activities[index].name;
+                        }
                         acitivity_active[index] = !acitivity_active[index];
-                        last_activity = ActivitiesData.activities[index].name;
                       });
                     },
                     child: Row(
@@ -112,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           a.name,
                           style: TextStyle(
                               color:
-                              acitivity_active[index] ? Colors.black : Theme.of(context).primaryColor),
+                              acitivity_active[index] ? Colors.white : Theme.of(context).primaryColor),
                         ),
                       ],
                     ),
