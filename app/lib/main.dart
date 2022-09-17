@@ -1,5 +1,6 @@
 import 'package:app/data/activities_data.dart';
 import 'package:app/models/activity.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +33,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  bool active = false;
+  int floor = 3;
   List<bool> acitivity_active = List.generate(ActivitiesData.activities.length, (index) => false);
 
   @override
@@ -44,8 +46,38 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(height: 10,),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AvatarGlow(
+                  glowColor: Theme.of(context).primaryColor,
+                  endRadius: 70.0,
+                  duration: Duration(milliseconds: 2000),
+                  repeat: true,
+                  showTwoGlows: true,
+
+                  child: IconButton(
+                    icon: Icon(Icons.power_settings_new),
+                    isSelected: active,
+                    color: active ? Colors.green : Colors.grey,
+                    iconSize: 100,
+                    onPressed: () {
+                      setState(() {
+                        active = !active;
+                      });
+                    },
+                  ),
+                ),
+                Text(active ? "Elevator activities\nare enabled" : "Elevator activities\nare disabled",)
+              ],
+            ),
+            SizedBox(height: 50,),
             Wrap(
               children: List.generate(ActivitiesData.activities.length, (index) {
                 Activity a = ActivitiesData.activities[index];
@@ -68,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(a.icon, color: acitivity_active[index] ? a.color : null),
+                        SizedBox(width: 5,),
                         Text(
                           a.name,
                           style: TextStyle(
@@ -79,6 +112,44 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               }),
+            ),
+            Spacer(),
+            Container(
+              width: double.infinity,
+              height: 150,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent, width: 4),
+                  borderRadius: BorderRadius.circular(15),
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blueAccent, width: 4),
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                        child: Center(child: Icon(Icons.unfold_more, size: 60,),),
+                      ),
+                    ),
+                    SizedBox(width: 80,),
+                    Container(
+                      width: 30,
+                      height: 100,
+                      child: ListView(
+                        children: List.generate(37, (index) {
+                          return Text(index.toString(), style: TextStyle(fontSize: 20, color: index==floor? Theme.of(context).primaryColor : null),);
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         ),
