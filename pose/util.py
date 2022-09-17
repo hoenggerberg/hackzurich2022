@@ -1,5 +1,6 @@
 import cv2
 import tensorflow_hub as hub
+import pickle
 
 def get_capture():
     # Loads video source (0 is for main webcam)
@@ -11,7 +12,6 @@ def get_capture():
         quit()
 
     success, img = cap.read()
-        
     if not success:
         print('Error reding frame')
         quit()
