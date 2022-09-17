@@ -10,6 +10,7 @@ class Mode {
 
 class ModesData {
   static List<Mode> modes = [
+      Mode("default", Colors.purple, Colors.purpleAccent),
       Mode("Breathing Exercise", Colors.white, Colors.blueAccent),
       Mode("Fun Facts", Colors.yellow, Colors.yellowAccent),
       Mode("Breathing Exercise", Colors.white, Colors.blueAccent),

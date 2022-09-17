@@ -41,6 +41,11 @@ class _MyHomePageState extends State<MyHomePage>
   Widget textW = Text("");
   bool textVisible = true;
 
+  String mode = "default";
+
+  Color color1 = Colors.purple;
+  Color color2 = Colors.purpleAccent;
+
   String curId = "INIT";
 
   Timer? timer;
@@ -59,8 +64,6 @@ class _MyHomePageState extends State<MyHomePage>
   late Animation _animation;
 
   final player = AudioPlayer();
-
-
 
   void updateState() async {
     ElevatorState e = await fetchElevatorState("HARDCODE");
@@ -83,15 +86,17 @@ class _MyHomePageState extends State<MyHomePage>
         });
   }
 
-
-
-
   @override
   void initState() {
-
     // timer = Timer.periodic(Duration(seconds: 1), (Timer t) => updateState());
     periodicUpdate();
 
+    showStuff();
+
+    super.initState();
+  }
+
+  void showStuff() {
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 4),
@@ -99,32 +104,72 @@ class _MyHomePageState extends State<MyHomePage>
     //_animationController.repeat(reverse: true);
     bool reverse = true;
     _animationController.forward();
-    playAudio('assets/breath_in.mp3');
-    changeText("breath in");
     _animation = Tween(begin: 2.0, end: 40.0).animate(_animationController)
       ..addListener(() {
         setState(() {});
       })
       ..addStatusListener((status) {
-        if (status == AnimationStatus.completed ||
-            status == AnimationStatus.dismissed) {
-          //_animationController.reverse();
-          changeText("");
-          Future.delayed(const Duration(milliseconds: 1000), () {
-            if (reverse) {
-              _animationController.reverse();
-              playAudio('assets/breath_out.mp3');
-              changeText("breathe out");
-            } else {
-              _animationController.forward();
-              playAudio('assets/breath_in.mp3');
-              changeText("breathe in");
+
+        switch(mode) {
+          case "Breathing Exercise": {
+
+            setState(() {
+              color1 = Colors.white;
+              color2 = Colors.blueAccent;
+            });
+
+
+            if (status == AnimationStatus.completed ||
+                status == AnimationStatus.dismissed) {
+              //_animationController.reverse();
+              changeText("");
+              Future.delayed(const Duration(milliseconds: 1000), () {
+                if (reverse) {
+                  _animationController.reverse();
+                  playAudio('assets/breath_out.mp3');
+                  changeText("breathe out");
+                } else {
+                  _animationController.forward();
+                  playAudio('assets/breath_in.mp3');
+                  changeText("breathe in");
+                }
+                reverse = !reverse;
+              });
             }
-            reverse = !reverse;
-          });
+
+          } break;
+          default: {
+
+            setState(() {
+              color1 = Colors.purple;
+              color2 = Colors.purpleAccent;
+            });
+
+            if (status == AnimationStatus.completed ||
+                status == AnimationStatus.dismissed) {
+              //_animationController.reverse();
+              changeText("Welcome");
+              Future.delayed(const Duration(milliseconds: 1000), () {
+                if (reverse) {
+                  _animationController.reverse();
+                } else {
+                  _animationController.forward();
+                }
+                reverse = !reverse;
+              });
+            }
+
+
+
+        } break;
+
+
+
+
         }
+
+
       });
-    super.initState();
   }
 
   Future<void> playAudio(String file) async {
@@ -134,7 +179,6 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           Center(
@@ -144,7 +188,8 @@ class _MyHomePageState extends State<MyHomePage>
               children: [
                 AnimatedSwitcher(
                   duration: const Duration(seconds: 1),
-                  transitionBuilder: (Widget child, Animation<double> animation) {
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
                     return ScaleTransition(scale: animation, child: child);
                   },
                   child: Text(
@@ -162,10 +207,10 @@ class _MyHomePageState extends State<MyHomePage>
                   //child: Icon(Icons.mic,color: Colors.white,),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white, //Color.fromARGB(255, 27, 28, 30),
+                      color: color1, //Color.fromARGB(255, 27, 28, 30),
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.blueAccent,
+                            color: color2,
                             //Color.fromARGB(130, 237, 125, 80),
                             blurRadius: _animation.value,
                             spreadRadius: _animation.value)
@@ -174,8 +219,34 @@ class _MyHomePageState extends State<MyHomePage>
               ],
             ),
           ),
-
-          InkWell(child: Text(curId), onTap: (){updateState();},),
+          Row(
+            children: [
+              InkWell(
+                child: Text(curId),
+                onTap: () {
+                  updateState();
+                },
+              ),
+              InkWell(
+                child: Text("default"),
+                onTap: () {
+                  setState(() {
+                    mode = "default";
+                  });
+                  ;
+                },
+              ),
+              InkWell(
+                child: Text("breathe"),
+                onTap: () {
+                  setState(() {
+                    mode = "Breathing Exercise";
+                  });
+                  ;
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );
