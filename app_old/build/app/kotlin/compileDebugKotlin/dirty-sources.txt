@@ -1,1 +1,0 @@
-/Users/witi/Projects/hackzurich2022/app/android/app/src/main/kotlin/com/example/hackzurich_2022/MainActivity.kt

@@ -6,7 +6,7 @@
 
 [Video](https://youtu.be/UN25-8ofQlU)
 
-With our Flutter mobile app, you can choose from activities like Dancing, Stretching, Karaoke  Trivia, and many others.
+With our mobile app (Flutter), you can choose from activities like Dancing, Stretching, Karaoke  Trivia, and many others.
 You tell us what you like so we can provide the perfect experience for you with our in-elevator screen and sound system. 
 Not gamified enough for you? Our pose prediction allows you to pick a floor without touching any buttons. To go up, simply reach out with your arms, or squat, to go down.
 
