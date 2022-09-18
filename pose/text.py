@@ -18,6 +18,8 @@ def writeText(img, text='squat', low = True):
     
     # Line thickness of 2 px
     thickness = 5
+
+    print(text) 
     
     # Using cv2.putText() method
     cv2.putText(img, text, org, font, 

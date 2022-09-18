@@ -30,4 +30,4 @@ def from2(target_floor:int, origin_floor:int):
 
     print(res)
 
-#from2(6, -1)
+# from2(2, 9)

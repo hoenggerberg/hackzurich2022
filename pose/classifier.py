@@ -45,9 +45,9 @@ class PosePredictor:
                 y_cat[i] = 1
                 y.append(y_cat)
         X,y = shuffle(X,y)
-        reg = RandomForestClassifier(n_estimators=300)
-        cv_results = cross_validate(reg, X, y, cv=5)
-        print('cv_results', cv_results)
+        # reg = RandomForestClassifier(n_estimators=300)
+        # cv_results = cross_validate(reg, X, y, cv=5)
+        # print('cv_results', cv_results)
 
         reg = RandomForestClassifier(n_estimators=300)
         reg.fit(X, y)

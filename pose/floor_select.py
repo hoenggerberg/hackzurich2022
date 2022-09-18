@@ -24,7 +24,6 @@ class FloorSelect:
                 pass
             elif time.time()-self.lockin<2:
                 self.lockin = time.time()+1000
-                print("api")
                 from2(self.origin_floor, self.floor)
                 self.origin_floor = self.floor
 
@@ -34,6 +33,5 @@ class FloorSelect:
 
     @property 
     def floor(self):
-        print(self.floor_)
         return int(self.floor_)
 
