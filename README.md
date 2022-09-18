@@ -27,11 +27,15 @@ Our Flutter app for mobile and web allows us to match different elevator riders 
 
 In `screen/`
 
-![Mobile App to set preferences](images/screen.png)
+![Elevator Screen](images/screen.png)
 
 Flutter app that is run on screens in the elevator.
 
+In the screen subfolder you can find webpage gui for elevator screens
+
 ## Pose Estimator
+
+![Pose Code](images/pose.png)
 
 In `pose/`
 
@@ -61,5 +65,9 @@ Adding new poses is simple and very straight forward. Just run ```python main.py
 
 So: How cool is that.
 
-## Screen
-In the screen subfolder you can find webpage gui for elevator screens
+## Backend
+
+in `backend/`
+
+![Backend](images/backend.png)
+
