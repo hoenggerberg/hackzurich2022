@@ -1,6 +1,6 @@
 # YMCA HackZurich Submission
 
-[Elevator Screen Webapp](https://hoenggerberg.github.io/)
+[Elevator Screen Webapp - click me](https://hoenggerberg.github.io/)
 
 [Android APK](https://drive.google.com/file/d/1iamX1tHXR-soC0SzUgj4FXB35zNVcms2/view?usp=sharing)
 
