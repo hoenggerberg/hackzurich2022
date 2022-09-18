@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SmartDot',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,
@@ -43,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage>
   bool textVisible = true;
 
   int triviaIdx = 0;
+
+  double scale = 1.0;
 
   String mode = "default";
 
@@ -210,6 +212,37 @@ class _MyHomePageState extends State<MyHomePage>
 
           } break;
 
+
+          case "Bye": {
+
+            setState(() {
+              color1 = Colors.purple;
+              color2 = Colors.purpleAccent;
+
+              radAdd = 90;
+              radMult = 0.2;
+              _animationController.duration=Duration(milliseconds: 1000);
+            });
+
+            if (status == AnimationStatus.completed ||
+                status == AnimationStatus.dismissed) {
+              //_animationController.reverse();
+              changeText("See ya :)");
+              Future.delayed(const Duration(milliseconds: 1), () {
+                if (reverse) {
+                  _animationController.reverse();
+                } else {
+                  _animationController.forward();
+                }
+                reverse = !reverse;
+              });
+            }
+
+
+
+          } break;
+
+
           default: {
 
             setState(() {
@@ -270,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   child: Text(
                     text,
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 60),
                     key: ValueKey<String>(text),
                   ),
                 ),
@@ -278,8 +311,8 @@ class _MyHomePageState extends State<MyHomePage>
                   height: 150,
                 ),
                 Container(
-                  width: _animation.value * radMult + radAdd,
-                  height: _animation.value * radMult + radAdd,
+                  width: _animation.value * radMult*scale + radAdd*scale,
+                  height: _animation.value * radMult*scale + radAdd*scale,
                   //child: Icon(Icons.mic,color: Colors.white,),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -288,8 +321,8 @@ class _MyHomePageState extends State<MyHomePage>
                         BoxShadow(
                             color: color2,
                             //Color.fromARGB(130, 237, 125, 80),
-                            blurRadius: _animation.value * radMult,
-                            spreadRadius: _animation.value * radMult)
+                            blurRadius: _animation.value * radMult*scale,
+                            spreadRadius: _animation.value * radMult*scale)
                       ]),
                 ),
               ],
@@ -307,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage>
                 child: Text("default "),
                 onTap: () {
                   setState(() {
-                    mode = "default ";
+                    mode = " default ";
                   });
                   ElevatorState(id: "HARDCODE", floor: 0, activity: "default", timestamp: 0.0).update();
                   ;
@@ -343,8 +376,20 @@ class _MyHomePageState extends State<MyHomePage>
                   ;
                 },
               ),
+              InkWell(
+                child: Text("bye "),
+                onTap: () {
+                  setState(() {
+                    mode = "Bye";
+                  });
+                  ElevatorState(id: "HARDCODE", floor: 0, activity: "Trivia", timestamp: 0.0).update();
+                  ;
+                },
+              ),
+              Text("   Click the words to the left or use the YMCA app. ")
             ],
           ),
+          Align(alignment: Alignment.bottomLeft, child: Text("MagicDot always shows the same on all devices when online"),)
         ],
       ),
     );
