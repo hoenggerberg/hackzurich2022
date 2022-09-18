@@ -2,7 +2,7 @@ import httpx
 
 floor = ["Parking"] + [f'Floor {floor}' for floor in range(11)]
 
-def from2(target_floor:int, origin_floor:int):
+def from2(target_floor:int, origin_floor:int, car:int=4):
 
     payload = {
             "asyncId": "c953e1d643",
@@ -30,4 +30,7 @@ def from2(target_floor:int, origin_floor:int):
 
     print(res)
 
-# from2(2, 9)
+# from2(2, 9,1)
+# from2(2, -1,2)
+# from2(2, 3,3)
+# from2(2, 1,4)
