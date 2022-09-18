@@ -1,5 +1,11 @@
 # YMCA HackZurich Submission
 
+[Elevator Screen Webapp](https://hoenggerberg.github.io/)
+
+[Android APK](https://drive.google.com/file/d/1iamX1tHXR-soC0SzUgj4FXB35zNVcms2/view?usp=sharing)
+
+[Video](https://youtu.be/UN25-8ofQlU)
+
 With our Flutter mobile app, you can choose from activities like Dancing, Stretching, Karaoke  Trivia, and many others.
 You tell us what you like so we can provide the perfect experience for you with our in-elevator screen and sound system. 
 Not gamified enough for you? Our pose prediction allows you to pick a floor without touching any buttons. To go up, simply reach out with your arms, or squat, to go down.
@@ -9,12 +15,25 @@ Our backend combined with the Schindler API  makes all of this work seamlessly.
 
 All on board (chuchu), we’re ready to elevate your day!
 
-## Flutter app
+## Flutter mobile app
+
+In `app/`
+
+![Mobile App to set preferences](images/app.jpeg)
 
 Our Flutter app for mobile and web allows us to match different elevator riders with each other to play minigames or perform solo. 
 
+## Flutter screen app
+
+In `screen/`
+
+![Mobile App to set preferences](images/screen.png)
+
+Flutter app that is run on screens in the elevator.
 
 ## Pose Estimator
+
+In `pose/`
 
 One of our coolest features is our Pose Prediction. Based on skeleton keypoints we can predict human poses like iconic dances and positions from pop culture. Not amazed enough? All of this works on device and in realtime. Wow. Still not? We are able to predict poses corretly with `95% accuracy on validation` sets. You want to test it. Sure. Just keep reading or ask us for a demo. 
 
